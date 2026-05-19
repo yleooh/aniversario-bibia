@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para A Minha Prinxuca 💙</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        html {
+            min-height: 100%;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background: transparent;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff85a1; }
+        html { scrollbar-width: thin; scrollbar-color: #ffb6c1 transparent; }
+
+        /* === CARTA === */
+        .carta {
+            background-color: #fff0f5;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 800px;
+            width: 100%;
+            border: 2px dashed #ffb6c1;
+            color: #444;
+            font-size: 1.1em;
+            line-height: 1.8;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeInCarta 1.2s ease forwards 0.3s;
+        }
+
+        @keyframes fadeInCarta {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* === TÍTULO === */
+        .titulo-carta {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: #d63f7a;
+            text-align: center;
+            margin: 0 0 8px 0;
+            opacity: 0;
+            animation: slideDown 0.8s ease forwards 1s;
+        }
+
+        .data-carta {
+            text-align: center;
+            font-size: 0.78em;
+            color: #b07090;
+            margin: 0 0 28px 0;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: slideDown 0.8s ease forwards 1.2s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === LAYOUT LADO A LADO === */
+        .conteudo-lado-a-lado {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .texto-carta {
+            flex: 1;
+            text-align: left;
+        }
+
+        /* === PARÁGRAFOS COM TYPEWRITER === */
+        .texto-carta p {
+            margin-top: 0;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards;
+        }
+
+        .texto-carta p:nth-child(1) { animation-delay: 1.5s; }
+        .texto-carta p:nth-child(2) { animation-delay: 2.2s; }
+        .texto-carta p:nth-child(3) { animation-delay: 3s; }
+
+        @keyframes fadeInParagraph {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* === ASSINATURA === */
+        .assinatura {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5em;
+            color: #d63f7a;
+            text-align: right;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards 3.8s;
+        }
+
+        /* === FOTO === */
+        .foto-direita {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid #ffceea;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards 2s;
+        }
+
+        .foto-direita:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 25px rgba(214, 63, 122, 0.3);
+            filter: brightness(1.05) saturate(1.1);
+        }
+
+        /* === CORAÇÕES AO CLICAR === */
+        .heart-burst {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.4em;
+            z-index: 9999;
+            animation: heartFly 1.2s ease forwards;
+            user-select: none;
+        }
+
+        @keyframes heartFly {
+            0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.5); }
+        }
+
+        /* === BOTÃO MÚSICA === */
+        .music-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #ffb6c1;
+            border: none;
+            cursor: pointer;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(255, 105, 150, 0.35);
+            transition: transform 0.2s ease, background 0.3s ease;
+            z-index: 100;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            background: #ff85a1;
+        }
+
+        .music-btn.playing {
+            animation: pulse 1.2s ease infinite;
+        }
+
+        .music-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff0f5;
+            border: 1.5px solid #ffb6c1;
+            border-radius: 40px;
+            padding: 8px 16px 8px 8px;
+            box-shadow: 0 4px 15px rgba(255,105,150,0.2);
+            z-index: 100;
+        }
+        .music-btn2 {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: #ffb6c1;
+            border: none; cursor: pointer;
+            font-size: 1.1em;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+        .music-btn2:hover { background: #ff85a1; transform: scale(1.1); }
+        .music-btn2.playing { animation: pulse 1.2s ease infinite; }
+        .vol-icon { font-size: 0.85em; color: #d63f7a; }
+        input[type=range].vol-slider {
+            width: 80px; height: 4px;
+            border-radius: 4px;
+            background: #ffceea;
+            outline: none; cursor: pointer;
+            -webkit-appearance: none;
+        }
+        input[type=range].vol-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: #d63f7a; cursor: pointer;
+        }
+        .vol-pct { font-size: 0.75em; color: #b07090; min-width: 28px; }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        /* === BOTÃO VOLTAR === */
+        .botao-voltar {
+            display: block;
+            width: fit-content;
+            margin: 36px auto 0 auto;
+            background-color: #ffceea;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards 4.2s;
+        }
+
+        .botao-voltar:hover {
+            background-color: #ffb6c1;
+            transform: scale(1.04);
+        }
+
+        /* === PANDAS === */
+        .panda-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .panda {
+            position: absolute;
+            bottom: -150px;
+            width: 100px;
+            height: 100px;
+            background-image: url('pandinhasSheet.png');
+            background-size: 800px 400px;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .pose1 { background-position: 0 0; animation: spriteAnim 0.8s steps(8) infinite, flutuarSubida 15s linear infinite; }
+        .pose2 { background-position: 0 -100px; animation: spriteAnim 1.2s steps(8) infinite, flutuarSubida 12s linear infinite; animation-delay: 2s; }
+        .pose3 { background-position: 0 -200px; animation: spriteAnim 1s steps(8) infinite, flutuarSubida 18s linear infinite; animation-delay: 4s; }
+        .pose4 { background-position: 0 -300px; animation: spriteAnim 0.9s steps(8) infinite, flutuarSubida 14s linear infinite; animation-delay: 1s; }
+
+        .panda:nth-child(1) { left: 5%;  transform: scale(0.8); }
+        .panda:nth-child(2) { left: 25%; transform: scale(1.2); }
+        .panda:nth-child(3) { left: 45%; transform: scale(1.0); }
+        .panda:nth-child(4) { left: 65%; transform: scale(0.9); }
+        .panda:nth-child(5) { left: 80%; transform: scale(1.1); }
+        .panda:nth-child(6) { left: 92%; transform: scale(0.7); }
+
+        @keyframes spriteAnim {
+            from { background-position-x: 0; }
+            to   { background-position-x: -800px; }
+        }
+
+        @keyframes flutuarSubida {
+            0%   { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-120vh) rotate(15deg); }
+        }
+
+        @media (max-width: 700px) {
+            .conteudo-lado-a-lado { flex-direction: column; }
+            .foto-direita { width: 100%; max-width: 300px; margin: 20px auto 0 auto; display: block; }
+            .titulo-carta { font-size: 1.7em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="carta">
+
+        <h1 class="titulo-carta">Para a minha Prinxuca 💙</h1>
+        <p class="data-carta">20 de Maio de 2026</p>
+
+        <div class="conteudo-lado-a-lado">
+
+            <div class="texto-carta">
+                <p>Feliz aniversário, meu amor!</p>
+                <p>Custa-me muito saber que não vou poder estar tão presente hoje como gostaria. Queria ser a pessoa a celebrar cada minuto deste teu dia ao teu lado. Mas, mesmo não estando aí fisicamente o tempo todo, o meu coração e os meus pensamentos não largam o teu pé um único segundo.
+                    Quero que aproveites o teu dia ao máximo, que sorrias muito e te divirtas. E prometo que vou compensar-te por esta ausência muito em breve, com um sushizinho, callzinhas à noite e umas massagens nas costas como tu gostas.
+                    Lembra-te sempre de que és a pessoa mais especial da minha vida.
+                    Às vezes dou por mim a pensar na sorte gigante que tive pelos nossos caminhos se terem cruzado.
+                </p>
+                <p>Amo-te muito e parabéns minha pandinha linda!</p>
+            </div>
+            
+            <img src="foto-carta.png" alt="A nossa foto" class="foto-direita" id="foto">
+            
+        </div>
+        
+        <p class="assinatura"> Com todo o meu amor, Leo 💙</p>
+
+        <a href="index.html" class="botao-voltar">💙 Voltar ao Cartão</a>
+    </div>
+
+    <div class="panda-container">
+        <div class="panda pose1"></div>
+        <div class="panda pose2"></div>
+        <div class="panda pose3"></div>
+        <div class="panda pose4"></div>
+        <div class="panda pose1"></div>
+        <div class="panda pose3"></div>
+    </div>
+
+    <!-- Botão de música -->
+    <div class="music-wrap">
+        <button class="music-btn2" id="musicBtn">🎵</button>
+        <div class="volume-wrap">
+            <span class="vol-icon">🔈</span>
+            <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="70" step="1">
+            <span class="vol-pct" id="volPct">70%</span>
+        </div>
+    </div>
+
+    <!-- Áudio - substitui o src pelo teu ficheiro de música -->
+    <audio id="bgMusic" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // === CORAÇÕES AO CLICAR NA FOTO ===
+        const foto = document.getElementById('foto');
+        const emojis = ['💙', '🐼', '💕', '✨', '🩷', '💫', '❤️'];
+
+        foto.addEventListener('click', (e) => {
+            const rect = foto.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 10; i++) {
+                const el = document.createElement('span');
+                el.classList.add('heart-burst');
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+                const angle = Math.random() * 360;
+                const dist = 60 + Math.random() * 80;
+                const tx = Math.cos(angle * Math.PI / 180) * dist;
+                const ty = Math.sin(angle * Math.PI / 180) * dist - 40;
+
+                el.style.left = cx + 'px';
+                el.style.top = cy + 'px';
+                el.style.setProperty('--tx', tx + 'px');
+                el.style.setProperty('--ty', ty + 'px');
+                el.style.animationDelay = (Math.random() * 0.2) + 's';
+
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1400);
+            }
+        });
+
+        // === BOTÃO MÚSICA ===
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const volSlider = document.getElementById('volSlider');
+        const volPct = document.getElementById('volPct');
+        let playing = false;
+
+        bgMusic.volume = 0.7;
+
+        musicBtn.addEventListener('click', () => {
+            if (playing) {
+                bgMusic.pause();
+                musicBtn.textContent = '🎵';
+                musicBtn.classList.remove('playing');
+            } else {
+                bgMusic.play().catch(() => {});
+                musicBtn.textContent = '🔇';
+                musicBtn.classList.add('playing');
+            }
+            playing = !playing;
+        });
+
+        volSlider.addEventListener('input', () => {
+        bgMusic.volume = volSlider.value / 100;
+        volPct.textContent = volSlider.value + '%';
+        });
+    </script>
+
+</body>
+</html>

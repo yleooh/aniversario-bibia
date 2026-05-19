@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário, Meu Amor! 💙</title>
+    <style>
+        /* TIPOS DE LETRA */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        
+        .cartao {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 90%;
+            transition: transform 0.3s ease;
+
+            position: relative; 
+            z-index: 10; /* Garante que o cartão fica sempre à frente dos pandas */
+        }
+
+        .cartao:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff6b81;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        p.intro {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .foto {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #ffceea;
+            margin: 20px 0;
+        }
+
+        .botao {
+            display: inline-block;
+            background-color: #ff6b81;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .botao:hover {
+            background-color: #ff4760;
+        }
+
+        /* =======================================================
+           --- SISTEMA DE PANDAS ANIMADOS (Sprite Sheet) ---
+           ======================================================= */
+        
+        .panda-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
+            overflow: hidden;
+            z-index: 1; /* Mantém os pandas no fundo */
+        }
+
+        .panda {
+            position: absolute;
+            bottom: -150px; 
+            width: 100px;  
+            height: 100px;
+
+            background-image: url('pandinhasSheet.png');
+            background-size: 800px 400px; 
+            background-repeat: no-repeat;
+            
+            opacity: 0.8;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+            animation: flutuarSubida 15s linear infinite; 
+        }
+
+        /* --- ANIMAÇÕES DE CADA POSE --- */
+        .pose1 {
+            background-position: 0 0; 
+            animation: spriteAnim 0.8s steps(8) infinite, flutuarSubida 15s linear infinite;
+        }
+        .pose2 {
+            background-position: 0 -100px;
+            animation: spriteAnim 1.2s steps(8) infinite, flutuarSubida 12s linear infinite;
+            animation-delay: 2s; 
+        }
+        .pose3 {
+            background-position: 0 -200px;
+            animation: spriteAnim 1s steps(8) infinite, flutuarSubida 18s linear infinite;
+            animation-delay: 4s;
+        }
+        .pose4 {
+            background-position: 0 -300px;
+            animation: spriteAnim 0.9s steps(8) infinite, flutuarSubida 14s linear infinite;
+            animation-delay: 1s;
+        }
+
+        /* Posições e tamanhos */
+        .panda:nth-child(1) { left: 5%;  transform: scale(0.8); }
+        .panda:nth-child(2) { left: 25%; transform: scale(1.2); }
+        .panda:nth-child(3) { left: 45%; transform: scale(1.0); }
+        .panda:nth-child(4) { left: 65%; transform: scale(0.9); }
+        .panda:nth-child(5) { left: 80%; transform: scale(1.1); }
+        .panda:nth-child(6) { left: 92%; transform: scale(0.7); }
+
+        @keyframes spriteAnim {
+            from { background-position-x: 0; }
+            to { background-position-x: -800px; } 
+        }
+
+        @keyframes flutuarSubida {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-120vh) rotate(15deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cartao">
+        <h1>Feliz Aniversário!</h1>
+        
+        <img src="vossa-foto.png" alt="Uma foto nossa especial" class="foto">
+        
+        <p class="intro">"Entre risos, aventuras e amor… escolher-te continua a ser a minha parte favorita.
+                          Obrigado por fazeres os meus dias mais felizes. Amo-te 💙"</p>
+        
+        <a href="carta.html" class="botao">Clica para uma Surpresa</a>
+    </div>
+
+    <div class="panda-container">
+        <div class="panda pose1"></div>
+        <div class="panda pose2"></div>
+        <div class="panda pose3"></div>
+        <div class="panda pose4"></div>
+        <div class="panda pose1"></div>
+        <div class="panda pose3"></div>
+    </div>
+
+</body>
+</html>
