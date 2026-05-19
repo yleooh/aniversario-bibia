@@ -17,8 +17,59 @@
             background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
             font-family: 'Poppins', sans-serif;
             text-align: center;
+            overflow: hidden; /* Evita scroll indesejado */
         }
         
+        /* === ECRÃ DE BOAS VINDAS === */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Fica por cima de tudo */
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .welcome-screen h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4em;
+            color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            padding: 0 20px;
+        }
+
+        .start-btn {
+            background-color: #fff;
+            color: #ff6b81;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2em;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* === CARTÃO PRINCIPAL === */
         .cartao {
             background-color: white;
             padding: 40px;
@@ -183,6 +234,11 @@
 </head>
 <body>
 
+    <div id="welcome-screen" class="welcome-screen">
+        <h2>Feliz Aniversário 🎂💙</h2>
+        <button id="start-btn" class="start-btn">Abrir a minha surpresa</button>
+    </div>
+
     <div class="cartao">
         <h1>Feliz Aniversário!</h1>
         
@@ -203,7 +259,6 @@
         <div class="panda pose3"></div>
     </div>
 
-    <!-- Player de música -->
     <div class="music-wrap">
         <button class="music-btn2" id="musicBtn">🎵</button>
         <div style="display:flex; align-items:center; gap:6px;">
@@ -218,6 +273,8 @@
     </audio>
 
     <script>
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const startBtn = document.getElementById('start-btn');
         const musicBtn = document.getElementById('musicBtn');
         const bgMusic = document.getElementById('bgMusic');
         const volSlider = document.getElementById('volSlider');
@@ -226,24 +283,22 @@
 
         bgMusic.volume = 0.7;
 
-        // Tenta tocar automaticamente assim que a página carrega
-        bgMusic.play().then(() => {
-            playing = true;
-            musicBtn.textContent = '🔇';
-            musicBtn.classList.add('playing');
-        }).catch(() => {
-            // Se o browser bloquear, fica à espera do primeiro clique em qualquer lado
-            document.addEventListener('click', () => {
-                if (!playing) {
-                    bgMusic.play().catch(() => {});
-                    playing = true;
-                    musicBtn.textContent = '🔇';
-                    musicBtn.classList.add('playing');
-                }
-            }, { once: true });
+        // Lógica de arranque no clique do botão da surpresa
+        startBtn.addEventListener('click', () => {
+            // Esconde o ecrã inicial com fade out
+            welcomeScreen.classList.add('hidden');
+            
+            // Inicia a música
+            bgMusic.play().then(() => {
+                playing = true;
+                musicBtn.textContent = '🔇';
+                musicBtn.classList.add('playing');
+            }).catch((err) => {
+                console.log("Erro ao reproduzir áudio:", err);
+            });
         });
 
-        // Botão para pausar/retomar
+        // Botão para pausar/retomar no canto inferior
         musicBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             if (playing) {
