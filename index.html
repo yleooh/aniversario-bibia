@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Aniversário, Meu Amor! 💙</title>
     <style>
-        /* TIPOS DE LETRA */
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
         body {
@@ -28,9 +27,8 @@
             max-width: 450px;
             width: 90%;
             transition: transform 0.3s ease;
-
             position: relative; 
-            z-index: 10; /* Garante que o cartão fica sempre à frente dos pandas */
+            z-index: 10;
         }
 
         .cartao:hover {
@@ -76,10 +74,67 @@
             background-color: #ff4760;
         }
 
-        /* =======================================================
-           --- SISTEMA DE PANDAS ANIMADOS (Sprite Sheet) ---
-           ======================================================= */
-        
+        /* === PLAYER DE MÚSICA === */
+        .music-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff0f5;
+            border: 1.5px solid #ffb6c1;
+            border-radius: 40px;
+            padding: 8px 16px 8px 8px;
+            box-shadow: 0 4px 15px rgba(255,105,150,0.2);
+            z-index: 100;
+        }
+        .music-btn2 {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #ffb6c1;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, background 0.3s ease;
+            flex-shrink: 0;
+        }
+        .music-btn2:hover { background: #ff85a1; transform: scale(1.1); }
+        .music-btn2.playing { animation: pulse 1.2s ease infinite; }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+        .vol-icon { font-size: 0.85em; color: #d63f7a; }
+        input[type=range].vol-slider {
+            -webkit-appearance: none;
+            width: 80px;
+            height: 4px;
+            border-radius: 4px;
+            background: #ffceea;
+            outline: none;
+            cursor: pointer;
+        }
+        input[type=range].vol-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #d63f7a;
+            cursor: pointer;
+        }
+        input[type=range].vol-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #d63f7a;
+            border: none;
+            cursor: pointer;
+        }
+        .vol-pct { font-size: 0.75em; color: #b07090; min-width: 28px; text-align: right; }
+
+        /* === PANDAS === */
         .panda-container {
             position: fixed;
             top: 0;
@@ -88,7 +143,7 @@
             height: 100%;
             pointer-events: none; 
             overflow: hidden;
-            z-index: 1; /* Mantém os pandas no fundo */
+            z-index: 1;
         }
 
         .panda {
@@ -96,38 +151,18 @@
             bottom: -150px; 
             width: 100px;  
             height: 100px;
-
             background-image: url('pandinhasSheet.png');
             background-size: 800px 400px; 
             background-repeat: no-repeat;
-            
             opacity: 0.8;
             filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
-            animation: flutuarSubida 15s linear infinite; 
         }
 
-        /* --- ANIMAÇÕES DE CADA POSE --- */
-        .pose1 {
-            background-position: 0 0; 
-            animation: spriteAnim 0.8s steps(8) infinite, flutuarSubida 15s linear infinite;
-        }
-        .pose2 {
-            background-position: 0 -100px;
-            animation: spriteAnim 1.2s steps(8) infinite, flutuarSubida 12s linear infinite;
-            animation-delay: 2s; 
-        }
-        .pose3 {
-            background-position: 0 -200px;
-            animation: spriteAnim 1s steps(8) infinite, flutuarSubida 18s linear infinite;
-            animation-delay: 4s;
-        }
-        .pose4 {
-            background-position: 0 -300px;
-            animation: spriteAnim 0.9s steps(8) infinite, flutuarSubida 14s linear infinite;
-            animation-delay: 1s;
-        }
+        .pose1 { background-position: 0 0; animation: spriteAnim 0.8s steps(8) infinite, flutuarSubida 15s linear infinite; }
+        .pose2 { background-position: 0 -100px; animation: spriteAnim 1.2s steps(8) infinite, flutuarSubida 12s linear infinite; animation-delay: 2s; }
+        .pose3 { background-position: 0 -200px; animation: spriteAnim 1s steps(8) infinite, flutuarSubida 18s linear infinite; animation-delay: 4s; }
+        .pose4 { background-position: 0 -300px; animation: spriteAnim 0.9s steps(8) infinite, flutuarSubida 14s linear infinite; animation-delay: 1s; }
 
-        /* Posições e tamanhos */
         .panda:nth-child(1) { left: 5%;  transform: scale(0.8); }
         .panda:nth-child(2) { left: 25%; transform: scale(1.2); }
         .panda:nth-child(3) { left: 45%; transform: scale(1.0); }
@@ -167,6 +202,68 @@
         <div class="panda pose1"></div>
         <div class="panda pose3"></div>
     </div>
+
+    <!-- Player de música -->
+    <div class="music-wrap">
+        <button class="music-btn2" id="musicBtn">🎵</button>
+        <div style="display:flex; align-items:center; gap:6px;">
+            <span class="vol-icon">🔈</span>
+            <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="70" step="1">
+            <span class="vol-pct" id="volPct">70%</span>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const volSlider = document.getElementById('volSlider');
+        const volPct = document.getElementById('volPct');
+        let playing = false;
+
+        bgMusic.volume = 0.7;
+
+        // Tenta tocar automaticamente assim que a página carrega
+        bgMusic.play().then(() => {
+            playing = true;
+            musicBtn.textContent = '🔇';
+            musicBtn.classList.add('playing');
+        }).catch(() => {
+            // Se o browser bloquear, fica à espera do primeiro clique em qualquer lado
+            document.addEventListener('click', () => {
+                if (!playing) {
+                    bgMusic.play().catch(() => {});
+                    playing = true;
+                    musicBtn.textContent = '🔇';
+                    musicBtn.classList.add('playing');
+                }
+            }, { once: true });
+        });
+
+        // Botão para pausar/retomar
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (playing) {
+                bgMusic.pause();
+                musicBtn.textContent = '🎵';
+                musicBtn.classList.remove('playing');
+            } else {
+                bgMusic.play().catch(() => {});
+                musicBtn.textContent = '🔇';
+                musicBtn.classList.add('playing');
+            }
+            playing = !playing;
+        });
+
+        // Controlo de volume
+        volSlider.addEventListener('input', () => {
+            bgMusic.volume = volSlider.value / 100;
+            volPct.textContent = volSlider.value + '%';
+        });
+    </script>
 
 </body>
 </html>
