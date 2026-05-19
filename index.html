@@ -7,19 +7,33 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
 
+        html {
+            min-height: 100%;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            scrollbar-width: thin; 
+            scrollbar-color: #ffb6c1 transparent;
+        }
+
         body {
             margin: 0;
-            padding: 0;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Começa centrado como no index original */
             min-height: 100vh;
-            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            background: transparent;
             font-family: 'Poppins', sans-serif;
             text-align: center;
-            overflow: hidden; /* Evita scroll indesejado */
+            box-sizing: border-box;
+            overflow-x: hidden;
         }
-        
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ffb6c1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff85a1; }
+
         /* === ECRÃ DE BOAS VINDAS === */
         .welcome-screen {
             position: fixed;
@@ -32,7 +46,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999; /* Fica por cima de tudo */
+            z-index: 9999;
             transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
@@ -69,6 +83,15 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
+        /* === CONTROLO DE VISIBILIDADE DAS SECÇÕES === */
+        #seccao-cartao {
+            display: block; /* Visível no início */
+        }
+
+        #seccao-carta {
+            display: none; /* Escondido no início */
+        }
+
         /* === CARTÃO PRINCIPAL === */
         .cartao {
             background-color: white;
@@ -77,29 +100,26 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             max-width: 450px;
             width: 90%;
-            transition: transform 0.3s ease;
             position: relative; 
             z-index: 10;
+            animation: fadeInCarta 1.2s ease forwards;
         }
 
-        .cartao:hover {
-            transform: translateY(-5px);
-        }
-
-        h1 {
+        .cartao h1 {
             font-family: 'Dancing Script', cursive;
             color: #ff6b81;
             font-size: 3em;
+            margin-top: 0;
             margin-bottom: 10px;
         }
 
-        p.intro {
+        .cartao p.intro {
             color: #555;
             line-height: 1.6;
             font-size: 1.1em;
         }
 
-        .foto {
+        .cartao .foto {
             width: 200px;
             height: 200px;
             object-fit: cover;
@@ -118,11 +138,156 @@
             font-size: 1.1em;
             font-weight: 600;
             margin-top: 20px;
+            cursor: pointer;
+            border: none;
             transition: background-color 0.3s ease;
         }
 
         .botao:hover {
             background-color: #ff4760;
+        }
+
+        /* === CARTA === */
+        .carta {
+            background-color: #fff0f5;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 800px;
+            width: 100%;
+            border: 2px dashed #ffb6c1;
+            color: #444;
+            font-size: 1.1em;
+            line-height: 1.8;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeInCarta 1.2s ease forwards 0.3s;
+        }
+
+        @keyframes fadeInCarta {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .titulo-carta {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2em;
+            color: #d63f7a;
+            text-align: center;
+            margin: 0 0 8px 0;
+            opacity: 0;
+            animation: slideDown 0.8s ease forwards 1s;
+        }
+
+        .data-carta {
+            text-align: center;
+            font-size: 0.78em;
+            color: #b07090;
+            margin: 0 0 28px 0;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: slideDown 0.8s ease forwards 1.2s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .conteudo-lado-a-lado {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .texto-carta {
+            flex: 1;
+            text-align: left;
+        }
+
+        .texto-carta p {
+            margin-top: 0;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards;
+        }
+
+        .texto-carta p:nth-child(1) { animation-delay: 1.5s; }
+        .texto-carta p:nth-child(2) { animation-delay: 2.2s; }
+        .texto-carta p:nth-child(3) { animation-delay: 3s; }
+
+        @keyframes fadeInParagraph {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .assinatura {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5em;
+            color: #d63f7a;
+            text-align: right;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards 3.8s;
+        }
+
+        .foto-direita {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid #ffceea;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards 2s;
+        }
+
+        .foto-direita:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 25px rgba(214, 63, 122, 0.3);
+            filter: brightness(1.05) saturate(1.1);
+        }
+
+        /* === CORAÇÕES AO CLICAR === */
+        .heart-burst {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.4em;
+            z-index: 9999;
+            animation: heartFly 1.2s ease forwards;
+            user-select: none;
+        }
+
+        @keyframes heartFly {
+            0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.5); }
+        }
+
+        /* === BOTÃO VOLTAR === */
+        .botao-voltar {
+            display: block;
+            width: fit-content;
+            margin: 36px auto 0 auto;
+            background-color: #ffceea;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInParagraph 0.8s ease forwards 4.2s;
+        }
+
+        .botao-voltar:hover {
+            background-color: #ffb6c1;
+            transform: scale(1.04);
         }
 
         /* === PLAYER DE MÚSICA === */
@@ -175,14 +340,6 @@
             background: #d63f7a;
             cursor: pointer;
         }
-        input[type=range].vol-slider::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #d63f7a;
-            border: none;
-            cursor: pointer;
-        }
         .vol-pct { font-size: 0.75em; color: #b07090; min-width: 28px; text-align: right; }
 
         /* === PANDAS === */
@@ -230,24 +387,48 @@
             0% { transform: translateY(0) rotate(0deg); }
             100% { transform: translateY(-120vh) rotate(15deg); }
         }
+
+        @media (max-width: 700px) {
+            .conteudo-lado-a-lado { flex-direction: column; }
+            .foto-direita { width: 100%; max-width: 300px; margin: 20px auto 0 auto; display: block; }
+            .titulo-carta { font-size: 1.7em; }
+        }
     </style>
 </head>
 <body>
 
     <div id="welcome-screen" class="welcome-screen">
-        <h2>Feliz Aniversário Momor🎂💙</h2>
+        <h2>Feliz Aniversário Momor 🎂💙</h2>
         <button id="start-btn" class="start-btn">Abrir a minha surpresa</button>
     </div>
 
-    <div class="cartao">
+    <div id="seccao-cartao" class="cartao">
         <h1>Feliz Aniversário!</h1>
-        
         <img src="vossa-foto.png" alt="Uma foto nossa especial" class="foto">
-        
         <p class="intro">"Entre risos, aventuras e amor… escolher-te continua a ser a minha parte favorita.
                           Obrigado por fazeres os meus dias mais felizes. Amo-te 💙"</p>
+        <button id="btn-ir-carta" class="botao">Clica para uma Surpresa</button>
+    </div>
+
+    <div id="seccao-carta" class="carta">
+        <h1 class="titulo-carta">Para a minha Prinxuca 💙</h1>
+        <p class="data-carta">20 de Maio de 2026</p>
+
+        <div class="conteudo-lado-a-lado">
+            <div class="texto-carta">
+                <p>Feliz aniversário, meu amor!</p>
+                <p>Custa-me muito saber que não vou poder estar tão presente hoje como gostaria. Queria ser a pessoa a celebrar cada minuto deste teu dia ao teu lado. Mas, mesmo não estando aí fisicamente o tempo todo, o meu coração e os meus pensamentos não largam o teu pé um único segundo.
+                    Quero que aproveites o teu dia ao máximo, que sorrias muito e te divirtas. E prometo que vou compensar-te por esta ausência muito em breve, com um sushizinho, callzinhas à noite e umas massagens nas costas como tu gostas.
+                    Lembra-te sempre de que és a pessoa mais especial da minha vida.
+                    Às vezes dou por mim a pensar na sorte gigante que tive pelos nossos caminhos se terem cruzado.
+                </p>
+                <p>Amo-te muito e parabéns minha pandinha linda!</p>
+            </div>
+            <img src="foto-carta.png" alt="A nossa foto" class="foto-direita" id="foto">
+        </div>
         
-        <a href="carta.html" class="botao">Clica para uma Surpresa</a>
+        <p class="assinatura"> Com todo o meu amor, Leo 💙</p>
+        <button id="btn-voltar" class="botao-voltar">💙 Voltar ao Cartão</button>
     </div>
 
     <div class="panda-container">
@@ -273,8 +454,16 @@
     </audio>
 
     <script>
+        // === ELEMENTOS E VARIÁVEIS ===
         const welcomeScreen = document.getElementById('welcome-screen');
         const startBtn = document.getElementById('start-btn');
+        
+        const seccaoCartao = document.getElementById('seccao-cartao');
+        const seccaoCarta = document.getElementById('seccao-carta');
+        
+        const btnIrCarta = document.getElementById('btn-ir-carta');
+        const btnVoltar = document.getElementById('btn-voltar');
+
         const musicBtn = document.getElementById('musicBtn');
         const bgMusic = document.getElementById('bgMusic');
         const volSlider = document.getElementById('volSlider');
@@ -283,12 +472,9 @@
 
         bgMusic.volume = 0.7;
 
-        // Lógica de arranque no clique do botão da surpresa
+        // === INICIAR A SURPRESA (PLAY MÚSICA) ===
         startBtn.addEventListener('click', () => {
-            // Esconde o ecrã inicial com fade out
             welcomeScreen.classList.add('hidden');
-            
-            // Inicia a música
             bgMusic.play().then(() => {
                 playing = true;
                 musicBtn.textContent = '🔇';
@@ -298,7 +484,58 @@
             });
         });
 
-        // Botão para pausar/retomar no canto inferior
+        // === NAVEGAÇÃO: IR PARA A CARTA ===
+        btnIrCarta.addEventListener('click', () => {
+            seccaoCartao.style.display = 'none'; // Esconde o cartão
+            seccaoCarta.style.display = 'block'; // Mostra a carta
+            
+            // Re-acionar as animações da carta retirando e re-adicionando a classe (opcional, para ser fluído)
+            seccaoCarta.style.animation = 'none';
+            seccaoCarta.offsetHeight; // Força o reflow
+            seccaoCarta.style.animation = null; 
+
+            // Ajusta o alinhamento da página para acomodar a carta comprida
+            document.body.style.alignItems = 'flex-start';
+        });
+
+        // === NAVEGAÇÃO: VOLTAR AO CARTÃO ===
+        btnVoltar.addEventListener('click', () => {
+            seccaoCarta.style.display = 'none'; // Esconde a carta
+            seccaoCartao.style.display = 'block'; // Mostra o cartão
+            document.body.style.alignItems = 'center'; // Volta a centrar
+        });
+
+        // === CORAÇÕES AO CLICAR NA FOTO DA CARTA ===
+        const foto = document.getElementById('foto');
+        const emojis = ['💙', '🐼', '💕', '✨', '🩷', '💫', '❤️'];
+
+        foto.addEventListener('click', (e) => {
+            const rect = foto.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 10; i++) {
+                const el = document.createElement('span');
+                el.classList.add('heart-burst');
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+                const angle = Math.random() * 360;
+                const dist = 60 + Math.random() * 80;
+                const tx = Math.cos(angle * Math.PI / 180) * dist;
+                const ty = Math.sin(angle * Math.PI / 180) * dist - 40;
+
+                el.style.left = cx + 'px';
+                el.style.top = cy + 'px';
+                el.style.setProperty('--tx', tx + 'px');
+                el.style.setProperty('--ty', ty + 'px');
+                el.style.animationDelay = (Math.random() * 0.2) + 's';
+
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1400);
+            }
+        });
+
+        // === CONTROLOS DE MÚSICA ===
         musicBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             if (playing) {
@@ -313,12 +550,10 @@
             playing = !playing;
         });
 
-        // Controlo de volume
         volSlider.addEventListener('input', () => {
             bgMusic.volume = volSlider.value / 100;
             volPct.textContent = volSlider.value + '%';
         });
     </script>
-
 </body>
 </html>
